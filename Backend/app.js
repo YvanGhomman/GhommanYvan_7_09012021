@@ -3,11 +3,13 @@ const bodyParser = require('body-parser');
 
 const path = require('path');
 
-/* const helmet = require('helmet');
-require('dotenv').config(); */
+const helmet = require('helmet');
+/* require('dotenv').config(); */
 
 
 const userRoutes = require("./routes/user.routes.js");
+const articleRoutes = require("./routes/article.routes.js");
+
 
 const app = express();
 
@@ -18,8 +20,8 @@ app.use((req, res, next) => {
     next();
 });
 
-/* app.use(helmet());
-app.disable('x-powered-by'); */
+app.use(helmet());
+app.disable('x-powered-by');
 
 // parse requests of content-type: application/json
 app.use(bodyParser.json());
@@ -28,6 +30,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use('/user', userRoutes);
+app.use('/article', articleRoutes);
 
 
 module.exports = app;
