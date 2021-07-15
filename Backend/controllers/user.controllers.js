@@ -87,15 +87,26 @@ exports.findOne = (req, res) => {
 };
 
 // Update a user identified by the userId in the request
-exports.update = (req, res) => {
+exports.update = (req, res, next) => {
   // Validate Request
   if (!req.body) {
       res.status(400).send({
         message: "Le champ ne peut pas être vide !"
       });
     }
+
+    bcrypt.hash(req.body.password, 10)
+    .then(hash => {
+      const utilisateur = new User({
+        email: req.body.email,
+        password: hash,
+        name: req.body.name,
+        firstname: req.body.firstname,
+        job: req.body.job,
+        admin: req.body.admin
+      });
   
-    User.updateById(req.params.userId, new User(req.body), (err, data) => {
+    User.updateById(req.params.userId, utilisateur, (err, data) => {
         if (err) {
           if (err.kind === "not_found") {
             res.status(404).send({
@@ -106,22 +117,12 @@ exports.update = (req, res) => {
               message: "Erreur de mise à jour du User avec l'id " + req.params.userId
             });
           }
-        } else 
-
-        bcrypt.hash(data.password, 10)
-        .then(hash => {
-        new User({
-          email: data.email,
-          password: hash,
-          name: data.name,
-          firstname: data.firstname,
-          job: data.job,
-          admin: data.admin
-        });
-        res.send(data);
+        } else res.send(data);
       }
-      ).catch(error => res.status(500).json({ error }));
-})};
+      )
+    })
+    .catch(error => res.status(500).json({ error }));
+};
 
 // Delete a user with the specified userId in the request
 exports.delete = (req, res) => {
