@@ -44,9 +44,9 @@ exports.login = (req, res, next) => {
             return res.status(401).json({ error: 'Mot de passe incorrect !' });
           }
           res.status(200).json({
-            userId: user._id,
+            userId: user.id,
             token: jwt.sign(
-              { userId: user._id },
+              { userId: user.id },
               process.env.DB_TOK,
               { expiresIn: '24h' }
             )
@@ -147,7 +147,7 @@ exports.deleteAll = (req, res) => {
       if (err)
         res.status(500).send({
           message:
-            err.message || "Une erreur est survenue lors de la suppression de tout les Users."
+            err.message || "Une erreur est survenue lors de la suppression de tous les Users."
         });
       else res.send({ message: `Les Users ont été supprimés !` });
     });

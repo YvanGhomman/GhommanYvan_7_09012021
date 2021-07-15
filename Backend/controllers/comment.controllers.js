@@ -1,5 +1,5 @@
 const sql = require("../models/db.js");
-const Article = require('../models/Article.models.js');
+const Comment = require('../models/Comment.models.js');
 require('dotenv').config();
 
 
@@ -12,16 +12,15 @@ exports.create = (req, res) => {
       });
     }
 
-    const article = new Article({
-        titre: req.body.titre,
-        contenu: req.body.contenu
+    const comment = new Comment({
+        commentaire: req.body.commentaire
       });
 
-    Article.create(article, (err, data) => {
+      Comment.create(comment, (err, data) => {
         if (err)
           res.status(500).send({
             message:
-              err.message || "Une erreur est servenue lors de la création de l'article."
+              err.message || "Une erreur est servenue lors de la création du commentaire."
           });
         else res.send(data);
       });
@@ -29,11 +28,11 @@ exports.create = (req, res) => {
 
 // Retrieve all Articles from the database
 exports.findAll = (req, res) => {
-  Article.getAll((err, data) => {
+    Comment.getAll((err, data) => {
       if (err)
         res.status(500).send({
           message:
-            err.message || "Une erreur est servenue lors de la récupération des Articles."
+            err.message || "Une erreur est servenue lors de la récupération des commentaires."
         });
       else res.send(data);
     });
@@ -41,15 +40,15 @@ exports.findAll = (req, res) => {
 
 // Find a single Article with a ArticleId
 exports.findOne = (req, res) => {
-    Article.findById(req.params.articleId, (err, data) => {
+    Comment.findById(req.params.commentId, (err, data) => {
       if (err) {
         if (err.kind === "not_found") {
           res.status(404).send({
-            message: `L'article avec l'id ${req.params.articleId} n'a pas été trouvé.`
+            message: `Le commentaire avec l'id ${req.params.commentId} n'a pas été trouvé.`
           });
         } else {
           res.status(500).send({
-            message: "Erreur de récupération de l'article avec l'id " + req.params.articleId
+            message: "Erreur de récupération du commentaire avec l'id " + req.params.commentId
           });
         }
       } else res.send(data);
@@ -65,15 +64,15 @@ exports.update = (req, res) => {
       });
     }
   
-    Article.updateById(req.params.articleId, new Article(req.body), (err, data) => {
+    Comment.updateById(req.params.commentId, new Comment(req.body), (err, data) => {
         if (err) {
           if (err.kind === "not_found") {
             res.status(404).send({
-              message: `L'article avec l'id ${req.params.articleId} n'a pas été trouvé.`
+              message: `Le commentaire avec l'id ${req.params.commentId} n'a pas été trouvé.`
             });
           } else {
             res.status(500).send({
-              message: "Erreur de mise à jour de l'article avec l'id " + req.params.articleId
+              message: "Erreur de mise à jour du commentaire avec l'id " + req.params.commentId
             });
           }
         } else      
@@ -82,33 +81,33 @@ exports.update = (req, res) => {
     );
 };
 
-// Delete a user with the specified ArticleId in the request
+// Delete a user with the specified commentId in the request
 exports.delete = (req, res) => {
-    Article.remove(req.params.articleId, (err, data) => {
+    Comment.remove(req.params.commentId, (err, data) => {
       if (err) {
         if (err.kind === "not_found") {
           res.status(404).send({
-            message: `L'article avec l'id ${req.params.articleId} n'a pas été trouvé.`
+            message: `L'article avec l'id ${req.params.commentId} n'a pas été trouvé.`
           });
         } else {
           res.status(500).send({
-            message: "Erreur de suppression de l'article avec l'id " + req.params.articleId
+            message: "Erreur de suppression du commentaire avec l'id " + req.params.commentId
           });
         }
-      } else res.send({ message: `L'article a été supprimé !` });
+      } else res.send({ message: `Le commentaire a été supprimé !` });
     });
 };
 
 
 // Delete all users from the database.
 exports.deleteAll = (req, res) => {
-    Article.removeAll((err, data) => {
+    Comment.removeAll((err, data) => {
       if (err)
         res.status(500).send({
           message:
-            err.message || "Une erreur est survenue lors de la suppression de tous les Articles."
+            err.message || "Une erreur est survenue lors de la suppression de tous les commentaires."
         });
-      else res.send({ message: `Les Articles ont été supprimés !` });
+      else res.send({ message: `Les commentaires ont été supprimés !` });
     });
 };
 

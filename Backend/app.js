@@ -9,6 +9,7 @@ const helmet = require('helmet');
 
 const userRoutes = require("./routes/user.routes.js");
 const articleRoutes = require("./routes/article.routes.js");
+const articleComments = require("./routes/comment.routes.js");
 
 
 const app = express();
@@ -31,6 +32,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use('/user', userRoutes);
 app.use('/article', articleRoutes);
+app.use('/comment', articleComments);
 
 
 module.exports = app;
