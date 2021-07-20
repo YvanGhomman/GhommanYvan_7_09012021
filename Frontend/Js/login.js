@@ -3,10 +3,10 @@ const validation = document.getElementById("validate");
 
 validation.addEventListener('click', (e)=>{
         e.preventDefault;
-        sendSignup();
+        sendLogin();
     });
 
-function sendSignup(){
+function sendLogin(){
 
     //on verifie que la checkbox est checked
 
@@ -22,16 +22,13 @@ function sendSignup(){
         
         //variable qui reccueille les infos de contact du client
             let contact = {
-                firstname : document.getElementById('inputPrenom').value,
-                name : document.getElementById('inputNom').value,
-                job : document.getElementById('inputJob').value,
                 password : document.getElementById('inputPassword').value,
                 email : document.getElementById('inputEmail').value
             }; 
             console.log(contact);
 
         //on POST les infos reccueillies au serveur
-            const envoi = fetch("http://localhost:3000/user/signup", {
+            const envoi = fetch("http://localhost:3000/user/login", {
                 method: 'POST',
                 body: JSON.stringify(contact),
                 headers: {
