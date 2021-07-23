@@ -32,15 +32,17 @@ exports.signup = (req, res, next) => {
 
 
 
-exports.login = (req, res, next) => { 
-  /* const Mail= req.body.email; */
-  User.findOne({ email: req.body.email },function(err, utilisateur){
-    // if there are any errors, return the error
+exports.login = async (req, res, next) => { 
 
+  await User.findOne({ email: req.body.email },function(err, utilisateur){
+    // if there are any errors, return the error
+    console.log(req.body.email);
+    //if pas cet emailpresent
     if (err){
     res.status(404).send({
       message: `Le User avec l'email ${req.body.email} n'a pas été trouvé.`
     }); }
+    //if
       if (!utilisateur) {
         return res.status(401).json({ error: 'Utilisateur non trouvé !' });
       }else{
