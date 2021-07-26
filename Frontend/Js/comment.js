@@ -1,7 +1,8 @@
 //Mise en place des constantes
 const urlComments = 'http://localhost:3000/comment/';
 const searchArticleParam = new URLSearchParams(window.location.search).get("id");
-const urlApiIdComsArticle = urlComments + searchArticleParam;
+
+const urlApiIdComsArticle = urlComments + searchArticleParam + '/comment';
 console.log(urlApiIdComsArticle);
 
 const commentsContainer = document.getElementById("comments-container");
@@ -12,12 +13,14 @@ function templateComments(data){
     for (let comment of data){
             commentElement += `<div class="card col-12 col-md-5 col-lg-3 center">
                                     <div class="card-body">
-                                        <h5 class="card-title center">${comment.id_user}</h5>
                                         <p class="card-text">${comment.commentaire}</p>
                                     </div>
                                 </div>`;
-    }
+      }   
     commentsContainer.innerHTML += commentElement;
+
+
+    /*  <h5 class="card-title center">${donnee.id_user}</h5> */
     /* <img src="${article.imageUrl}" class="image-accueil card-img-top" alt="${article.name}"> */
 };
 
@@ -27,7 +30,13 @@ fetch(urlApiIdComsArticle)
         response.json()
     .then((data) => {
         console.log(data);
-        templateComments(data)
+        /* for (const [key, value] of Object.entries(data)){
+           console.log(`${key}: ${value}`); */
+           console.log('test');
+            templateComments(data);
+            
+ /*        }  */
+
         })
     )
     .catch((err) => console.log('Erreur : ' + err));

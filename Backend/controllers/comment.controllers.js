@@ -3,6 +3,7 @@ const Comment = require('../models/Comment.models.js');
 require('dotenv').config();
 
 
+
 // Create and Save a new user
 exports.create = (req, res) => {
     // Validate request
@@ -13,7 +14,9 @@ exports.create = (req, res) => {
     }
 
     const comment = new Comment({
-        commentaire: req.body.commentaire
+        commentaire: req.body.commentaire,
+        id_article : req.body.id_article,
+        id_user : req.body.id_user
       });
 
       Comment.create(comment, (err, data) => {

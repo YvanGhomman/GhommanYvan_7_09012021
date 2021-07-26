@@ -28,7 +28,7 @@ function sendComment(){
         //variable qui reccueille les infos de contact du client
             let comment = {
                 id_article : idArticle,
-                commentaire : document.getElementById('commentTextarea').value
+                commentaire : document.getElementById('commentTextarea').value,
             }; 
             console.log(comment);
 

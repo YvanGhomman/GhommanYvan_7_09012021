@@ -3,7 +3,9 @@ const sql = require("./db.js");
 
 // constructor
 const Comment = function(client) {
-    this.commentaire = client.commentaire;
+    this.commentaire = client.commentaire,
+    this.id_article = client.id_article,
+    this.id_user = client.id_user;
 };
 
 
@@ -42,8 +44,8 @@ Comment.create = (newComment, result) => {
       }
   
       if (res.length) {
-        console.log("found comments of the article: ", res[0]);
-        result(null, res[0]);
+        console.log("found comments of the article: ", res);
+        result(null, res);
         return;
       }
   
