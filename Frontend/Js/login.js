@@ -1,6 +1,7 @@
 const validation = document.getElementById("validate");
 
 
+
 validation.addEventListener('click', (e)=>{
         e.preventDefault;
         sendLogin();
@@ -52,6 +53,8 @@ function sendLogin(){
                     }
                     console.log(result); */
 
+                    
+                    sessionStorage.setItem("token", confirmation.token)
                     window.location.href ="./accueil.html";
 
                     

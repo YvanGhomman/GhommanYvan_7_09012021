@@ -48,7 +48,7 @@ function sendComment(){
                     let confirmation = await response.json();
                     console.log(confirmation);
 
-                    window.location.href ="./accueil.html";
+                    window.location.href =`./article.html?id=${idArticle}`;
 
                     
             //traitement des erreurs

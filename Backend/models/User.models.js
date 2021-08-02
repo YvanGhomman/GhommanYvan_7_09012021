@@ -1,12 +1,3 @@
-/* 
-const User = {
-    email : { type: String, required: true, unique: true },
-    password: { type: String, required: true },
-    name: { type: String, required: true },
-    firstname: { type: String, required: true },
-    job: { type: String, required: true },
-    admin: { type: Boolean, required: false, default: 0 },
-  }; */
 
 const sql = require("./db.js");
 
@@ -48,7 +39,7 @@ User.create = (newUtilisateur, result) => {
   };
 
   User.findOne= (email, result) => {
-    sql.query(`SELECT * FROM user WHERE email = ?`, [email], (err, res) => {
+    sql.query(`SELECT * FROM user WHERE email = ?`, email, (err, res) => {
       if (err) {
         console.log("error: ", err);
         result(err, null);
@@ -56,7 +47,7 @@ User.create = (newUtilisateur, result) => {
       }
   
       if (res.length) {
-        console.log("found user: ", res[0]);
+        console.log("found email: ", res[0]);
         result(null, res[0]);
         return;
       }

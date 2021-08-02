@@ -1,6 +1,5 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-
 const User = require('../models/User.models.js');
 require('dotenv').config();
 
@@ -24,45 +23,60 @@ exports.signup = (req, res, next) => {
                 message:
                   err.message || "Une erreur est servenue lors de la création du User."
               });
-            else res.send(data);
+            else /* res.status(201).json({"id": data.id}), */
+                  res.status(201).json({
+                    userId: data.id,
+                    token: jwt.sign(
+                      { userId: data.id },
+                      process.env.DB_TOK,
+                      { expiresIn: '24h' }
+                    )
+                  });
+                 /* res.send(data); */
           });
       })
       .catch(error => res.status(500).json({ error }));
 };
 
 
-
-exports.login = async (req, res, next) => { 
-
-  await User.findOne({ email: req.body.email },function(err, utilisateur){
-    // if there are any errors, return the error
-    console.log(req.body.email);
-    //if pas cet emailpresent
-    if (err){
-    res.status(404).send({
-      message: `Le User avec l'email ${req.body.email} n'a pas été trouvé.`
-    }); }
-    //if
-      if (!utilisateur) {
-        return res.status(401).json({ error: 'Utilisateur non trouvé !' });
-      }else{
-      bcrypt.compare(req.body.password, utilisateur.password)
+exports.login = (req, res, next) => {
+  User.findOne(req.body.email, (err, data) => {
+    if (err) {
+      if (err.kind === "not_found") {
+        res.status(404).send({
+          message: `Le user avec l'email ${req.body.email} n'a pas été trouvé.`
+        });
+      } else {
+        res.status(500).send({
+          message: "Erreur de récupération du user avec l'email " + req.body.email
+        });
+      }
+    } else {
+      bcrypt.compare(req.body.password, data.password)
         .then(valid => {
           if (!valid) {
             return res.status(401).json({ error: 'Mot de passe incorrect !' });
-          }
-          res.status(200).json({
-            userId: utilisateur.id,
+          } else {
+          
+            res.status(200).json({
+            userId: data.id,
             token: jwt.sign(
-              { userId: utilisateur.id },
+              { userId: data.id },
               process.env.DB_TOK,
               { expiresIn: '24h' }
+              
             )
+            
           });
-        })
-        .catch(error => res.status(500).json({ error }));
-   } })
+          }
+          
+
+        }).catch(error => res.status(500).json({ error }))
+  } 
+  });
 };
+
+
 
 // Retrieve all users from the database
 exports.findAll = (req, res) => {
@@ -160,4 +174,6 @@ exports.deleteAll = (req, res) => {
       else res.send({ message: `Les Users ont été supprimés !` });
     });
 };
+
+
 

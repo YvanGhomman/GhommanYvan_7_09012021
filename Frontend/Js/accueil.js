@@ -19,9 +19,14 @@ function templateArticles(data){
     articlesContainer.innerHTML += articleElement;
     /* <img src="${article.imageUrl}" class="image-accueil card-img-top" alt="${article.name}"> */
 };
-
+ 
 //Get Function with Fetch
-fetch(urlArticles)
+fetch(urlArticles, {
+    method: 'GET',
+    headers: {
+        'Authorization': 'Bearer ' + sessionStorage.getItem("token")
+    }
+  })
     .then((response) =>
         response.json()
     .then((data) => {
