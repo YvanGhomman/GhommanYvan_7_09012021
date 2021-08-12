@@ -1,5 +1,12 @@
 const validation = document.getElementById("validateArticle");
-
+const userName = sessionStorage.getItem("userName");
+const userFirstname = sessionStorage.getItem("userFirstname");
+const user_Id = sessionStorage.getItem("userId");
+console.log(sessionStorage);
+ const confirmationUser = JSON.parse(sessionStorage.getItem("confirm"));
+console.log(confirmationUser);
+const id_user = confirmationUser.userId;
+console.log(id_user); 
 
 validation.addEventListener('click', (e)=>{
         e.preventDefault;
@@ -22,8 +29,11 @@ function sendArticle(){
         
         //variable qui reccueille les infos de contact du client
             let article = {
-                titre : document.getElementById('inputTitre').value,
-                contenu : document.getElementById('textarea').value
+                titre: document.getElementById('inputTitre').value,
+                contenu: document.getElementById('textarea').value,
+                user_name: userName,
+                user_firstname: userFirstname,
+                id_user: id_user
             }; 
             console.log(article);
 
@@ -32,7 +42,8 @@ function sendArticle(){
                 method: 'POST',
                 body: JSON.stringify(article),
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + sessionStorage.getItem("token")
                 }
             });
         //traitement de la réponse du serveur
@@ -42,15 +53,7 @@ function sendArticle(){
                 //récupération de la réponse du serveur
                     let confirmation = await response.json();
                     console.log(confirmation);
-                //récupération de l'Id de la validation de prise en compte de la commande du serveur
-                    /* let idConfirmation = confirmation.contactId;
-                    console.log(idConfirmation);
-                //variable qui reccueille le contact du client et l'Id de confirmation de commande
-                    let result = {
-                        idConfirmation: idConfirmation,
-                        contact: contact
-                    }
-                    console.log(result); */
+                
 
                     window.location.href ="./accueil.html";
 

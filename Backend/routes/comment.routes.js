@@ -7,7 +7,7 @@ const commentCtrl = require('../controllers/comment.controllers.js');
 
 
 router.post('/',  /* auth, */ commentCtrl.create);
-router.get('/',  /* auth, */ commentCtrl.findAll);
+router.get('/', /*auth, */ commentCtrl.findAll);
 router.get('/:articleId/comment',  /* auth, */ commentCtrl.findComsWithArticleId);
 router.get('/:commentId',  /* auth, */ commentCtrl.findOne);
 router.put('/:commentId',  /* auth, */  commentCtrl.update);

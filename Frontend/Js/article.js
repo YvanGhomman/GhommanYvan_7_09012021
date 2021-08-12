@@ -21,7 +21,12 @@ function templateArticle(data){
 };
 
 //Get Function with Fetch
-fetch(urlApiId)
+fetch(urlApiId, {
+    method: 'GET',
+    headers: {
+        'Authorization': 'Bearer ' + sessionStorage.getItem("token")
+    }
+  })
     .then((response) =>
         response.json()
     .then((data) => {

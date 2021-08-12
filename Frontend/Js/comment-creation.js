@@ -37,7 +37,11 @@ function sendComment(){
                 method: 'POST',
                 body: JSON.stringify(comment),
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + sessionStorage.getItem("token")
+                    }
                 }
             });
         //traitement de la réponse du serveur

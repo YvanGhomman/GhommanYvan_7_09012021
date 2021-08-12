@@ -25,7 +25,12 @@ function templateComments(data){
 };
 
 //Get Function with Fetch
-fetch(urlApiIdComsArticle)
+fetch(urlApiIdComsArticle, {
+    method: 'GET',
+    headers: {
+        'Authorization': 'Bearer ' + sessionStorage.getItem("token")
+    }
+  })
     .then((response) =>
         response.json()
     .then((data) => {

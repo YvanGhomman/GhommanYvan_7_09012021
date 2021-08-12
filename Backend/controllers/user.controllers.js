@@ -23,16 +23,17 @@ exports.signup = (req, res, next) => {
                 message:
                   err.message || "Une erreur est servenue lors de la création du User."
               });
-            else /* res.status(201).json({"id": data.id}), */
-                  res.status(201).json({
-                    userId: data.id,
+            else {
+                  res.status(200).json({
+                    userId: data.userId,
+                    userName: data.name,
+                    userFirstname: data.firstname,
                     token: jwt.sign(
-                      { userId: data.id },
+                      { userId: data.userId },
                       process.env.DB_TOK,
                       { expiresIn: '24h' }
                     )
-                  });
-                 /* res.send(data); */
+                  });}
           });
       })
       .catch(error => res.status(500).json({ error }));
@@ -57,20 +58,17 @@ exports.login = (req, res, next) => {
           if (!valid) {
             return res.status(401).json({ error: 'Mot de passe incorrect !' });
           } else {
-          
             res.status(200).json({
             userId: data.id,
+            userName: data.name,
+            userFirstname: data.firstname,
             token: jwt.sign(
               { userId: data.id },
               process.env.DB_TOK,
               { expiresIn: '24h' }
-              
             )
-            
           });
           }
-          
-
         }).catch(error => res.status(500).json({ error }))
   } 
   });

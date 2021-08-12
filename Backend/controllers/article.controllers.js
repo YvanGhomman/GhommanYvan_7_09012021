@@ -14,7 +14,10 @@ exports.create = (req, res) => {
 
     const article = new Article({
         titre: req.body.titre,
-        contenu: req.body.contenu
+        contenu: req.body.contenu,
+        user_name: req.body.user_name,
+        user_firstname: req.body.user_firstname,
+        id_user: req.body.id_user
       });
 
     Article.create(article, (err, data) => {

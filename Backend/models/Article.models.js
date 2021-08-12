@@ -5,6 +5,9 @@ const sql = require("./db.js");
 const Article = function(client) {
     this.titre = client.titre;
     this.contenu = client.contenu;
+    this.user_name = client.user_name;
+    this.user_firstname = client.user_firstname;
+    this.id_user = client.id_user;
 };
 
 

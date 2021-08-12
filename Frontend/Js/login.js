@@ -29,7 +29,7 @@ function sendLogin(){
             console.log(contact);
 
         //on POST les infos reccueillies au serveur
-            const envoi = fetch("http://localhost:3000/user/login", {
+            const envoi =  fetch("http://localhost:3000/user/login", {
                 method: 'POST',
                 body: JSON.stringify(contact),
                 headers: {
@@ -37,32 +37,35 @@ function sendLogin(){
                 }
             });
         //traitement de la réponse du serveur
-            envoi.then(async response =>{
-                try{
+         envoi.then( async response =>{
+                try{ 
                     console.log(response);
                 //récupération de la réponse du serveur
                     let confirmation = await response.json();
                     console.log(confirmation);
-                //récupération de l'Id de la validation de prise en compte de la commande du serveur
-                    /* let idConfirmation = confirmation.contactId;
-                    console.log(idConfirmation);
+
+
+                     let userId = confirmation.userId;
+                    console.log(userId);
                 //variable qui reccueille le contact du client et l'Id de confirmation de commande
                     let result = {
-                        idConfirmation: idConfirmation,
-                        contact: contact
+                        userId: userId
                     }
-                    console.log(result); */
-
+                    console.log(result); 
                     
-                    sessionStorage.setItem("token", confirmation.token)
-                    window.location.href ="./accueil.html";
+                    sessionStorage.setItem("confirm", JSON.stringify(result));
+                    sessionStorage.setItem("userId", confirmation.userId);
+                    sessionStorage.setItem("token", confirmation.token);
+                    sessionStorage.setItem("userName", confirmation.userName);
+                    sessionStorage.setItem("userFirstname", confirmation.userFirstname);
+                    window.location.href ="./accueil.html"; 
 
                     
             //traitement des erreurs
-                } catch (error) {
+                 } catch (error) {
                     console.log(error);
                     alert("Un problème est survenu, merci de réessayer plus tard");
-                }
+                } 
             });
         };
 }

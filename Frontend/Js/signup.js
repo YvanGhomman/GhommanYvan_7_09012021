@@ -45,17 +45,12 @@ function sendSignup(){
                 //récupération de la réponse du serveur
                     let confirmation = await response.json();
                     console.log(confirmation);
-                //récupération de l'Id de la validation de prise en compte de la commande du serveur
-                    /* let idConfirmation = confirmation.contactId;
-                    console.log(idConfirmation);
-                //variable qui reccueille le contact du client et l'Id de confirmation de commande
-                    let result = {
-                        idConfirmation: idConfirmation,
-                        contact: contact
-                    }
-                    console.log(result); */
 
-                    window.location.href ="./accueil.html";
+                    sessionStorage.setItem("userId", confirmation.id);
+                    sessionStorage.setItem("token", confirmation.token);
+                    sessionStorage.setItem("userName", confirmation.userName);
+                    sessionStorage.setItem("userFirstname", confirmation.userFirstname);
+                    /* window.location.href ="./accueil.html"; */
 
                     
             //traitement des erreurs

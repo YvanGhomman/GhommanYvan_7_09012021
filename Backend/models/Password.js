@@ -1,10 +1,10 @@
 const passwordValidator = require('password-validator');
  
 // Create a schema
-const schema = new passwordValidator();
+const passwordSchema = new passwordValidator();
  
 // Add properties to it
-module.exports = schema
+module.exports = passwordSchema
 .is().min(8)                                    // Minimum length 8
 .is().max(100)                                  // Maximum length 100
 .has().uppercase()                              // Must have uppercase letters

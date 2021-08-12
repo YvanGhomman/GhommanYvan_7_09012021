@@ -1,6 +1,7 @@
 {
   "dependencies": {
     "bootstrap": "^5.0.2",
+    "dotenv": "^10.0.0",
     "jquery": "^3.6.0",
     "popper.js": "^1.16.1",
     "sass": "^1.35.2"
@@ -9,7 +10,6 @@
   "version": "1.0.0",
   "description": "Front-end Groupomania",
   "main": "index.js",
-  "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

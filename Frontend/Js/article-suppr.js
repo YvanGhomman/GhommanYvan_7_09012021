@@ -24,6 +24,9 @@ function Suppression(){
         //on POST les infos reccueillies au serveur
             const envoi = fetch(urlApiId2, {
                 method: 'DELETE',
+                headers: {
+                    'Authorization': 'Bearer ' + sessionStorage.getItem("token")
+                }
             });
         //traitement de la réponse du serveur
             envoi.then(async response =>{
